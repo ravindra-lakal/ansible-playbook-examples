@@ -1,0 +1,24 @@
+---
+- hosts: localhost
+
+  vars_files:
+  - vars/files.yml
+  tasks:
+  - name: Create Directory Structure
+    file: path={{item}} state=directory
+    with_items:
+    - "{{ home }}/srv/repo"
+    - "{{ home }}/srv/cache"
+
+  - name: Create file
+    file:
+      path: "{{ home }}/srv/repo/{{ file }} "
+      state: touch
+
+  - name: Copy file
+    copy:
+      src: "{{ home }}/srv/repo/{{ file }}"
+      dest: "{{ home }}/srv/cache/"
+
+
+
